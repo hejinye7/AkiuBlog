@@ -10,5 +10,7 @@
 # 排序模式
 /time /sort/time/ 301
 /alpha /sort/alpha/ 301
+# 标签云
+/tags /tags/ 301
 # SPA fallback: 404.html
 /* /404.html 404
