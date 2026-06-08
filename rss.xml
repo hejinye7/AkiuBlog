@@ -5,16 +5,16 @@
     <link>https://hejinye7.github.io/AkiuBlog</link>
     <description>一个用 Markdown 写作的个人博客</description>
     <language>zh-CN</language>
-    <lastBuildDate>Mon, 08 Jun 2026 14:26:25 GMT</lastBuildDate>
+    <lastBuildDate>Mon, 08 Jun 2026 15:25:03 GMT</lastBuildDate>
     <atom:link href="https://hejinye7.github.io/AkiuBlog/rss.xml" rel="self" type="application/rss+xml"/>
     
     <item>
-      <title><![CDATA[Hello Qiu - 世界第一的博客格式]]></title>
-      <link>https://hejinye7.github.io/AkiuBlog/posts/hello-world.html</link>
-      <guid>https://hejinye7.github.io/AkiuBlog/posts/hello-world.html</guid>
-      <description><![CDATA[.qiu 格式的示例文章]]></description>
-      <pubDate>Mon, 08 Jun 2026 00:00:00 GMT</pubDate>
-      <category>公告</category>
+      <title><![CDATA[那个求求你赞助一下，求求了，我编辑了这个网站一天了。。。这玩意大概消耗了10-20元的token，为了ai修bug确实累死我了]]></title>
+      <link>https://hejinye7.github.io/AkiuBlog/posts/手机里-mq59vpgx.html</link>
+      <guid>https://hejinye7.github.io/AkiuBlog/posts/手机里-mq59vpgx.html</guid>
+      <description><![CDATA[111]]></description>
+      <pubDate>Mon, 08 Jun 2026 15:00:00 GMT</pubDate>
+      <category>未分类</category>
     </item>
   
 
@@ -28,18 +28,18 @@
 | 1 | 1 | 1 |
 
 ![](/uploads/mq59ko90-ug07.png)]]></description>
-      <pubDate>Mon, 08 Jun 2026 00:00:00 GMT</pubDate>
+      <pubDate>Mon, 08 Jun 2026 14:50:00 GMT</pubDate>
       <category>未分类</category>
     </item>
   
 
     <item>
-      <title><![CDATA[那个求求你赞助一下，求求了，我编辑了这个网站一天了。。。这玩意大概消耗了10-20元的token，为了ai修bug确实累死我了]]></title>
-      <link>https://hejinye7.github.io/AkiuBlog/posts/手机里-mq59vpgx.html</link>
-      <guid>https://hejinye7.github.io/AkiuBlog/posts/手机里-mq59vpgx.html</guid>
-      <description><![CDATA[111]]></description>
-      <pubDate>Mon, 08 Jun 2026 00:00:00 GMT</pubDate>
-      <category>未分类</category>
+      <title><![CDATA[Hello Qiu - 世界第一的博客格式]]></title>
+      <link>https://hejinye7.github.io/AkiuBlog/posts/hello-world.html</link>
+      <guid>https://hejinye7.github.io/AkiuBlog/posts/hello-world.html</guid>
+      <description><![CDATA[.qiu 格式的示例文章]]></description>
+      <pubDate>Mon, 08 Jun 2026 14:40:00 GMT</pubDate>
+      <category>公告</category>
     </item>
   
   </channel>

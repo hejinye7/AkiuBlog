@@ -1,8 +1,8 @@
 # Cloudflare Pages redirects
 # 文章路径重写
-/post/hello-world /posts/hello-world.html 301
-/post/你们好我这是一篇测试文章看看github-mq59lb37 /posts/你们好我这是一篇测试文章看看github-mq59lb37.html 301
 /post/手机里-mq59vpgx /posts/手机里-mq59vpgx.html 301
+/post/你们好我这是一篇测试文章看看github-mq59lb37 /posts/你们好我这是一篇测试文章看看github-mq59lb37.html 301
+/post/hello-world /posts/hello-world.html 301
 # 分类页
 /categories /categories/ 301
 /about /about/ 301
