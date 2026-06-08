@@ -31,6 +31,7 @@
         <a href="../" class="active">首页</a>
         <a href="../categories/" class="">分类</a>
         <a href="../search/" class="">搜索</a>
+        <a href="../donate/" class="">☕ 支持</a>
         <a href="../about/" class="">关于</a>
         
           <a href="../game.html" class="">🎮 游戏</a>
@@ -115,6 +116,70 @@
 
   <!-- 主脚本 -->
   <script src="../js/main.js"></script>
+
+  <!-- 资助弹窗 -->
+  
+  <div class="donate-overlay" id="donateOverlay">
+    <div class="donate-modal">
+      <h3>支持开发</h3>
+      <p>如果你喜欢这个博客，欢迎请我喝杯咖啡 ☕</p>
+      <div class="donate-modal-img">
+        <img src="../uploads/donate.png" alt="资助" loading="lazy">
+      </div>
+      <div class="donate-modal-actions">
+        <button class="btn btn-secondary" onclick="closeDonate(7)">7天内不显示</button>
+        <button class="btn" onclick="closeDonate(0)">关闭</button>
+      </div>
+    </div>
+  </div>
+  <script>
+  (function() {
+    var key = 'donate_hide_until';
+    var until = localStorage.getItem(key);
+    var now = Date.now();
+    if (!until || parseInt(until) < now) {
+      var overlay = document.getElementById('donateOverlay');
+      if (overlay) overlay.style.display = 'flex';
+    }
+    window.closeDonate = function(days) {
+      var overlay = document.getElementById('donateOverlay');
+      if (overlay) overlay.style.display = 'none';
+      if (days > 0) {
+        localStorage.setItem(key, String(now + days * 24 * 60 * 60 * 1000));
+      }
+    };
+  })();
+  </script>
+  <style>
+  .donate-overlay {
+    display: none;
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 9999;
+    justify-content: center; align-items: center;
+    padding: 20px;
+  }
+  .donate-modal {
+    background: var(--bg-primary);
+    border-radius: var(--radius-lg);
+    padding: 32px 28px 24px;
+    max-width: 360px;
+    width: 100%;
+    text-align: center;
+    box-shadow: var(--shadow-lg);
+    animation: donateIn 0.3s ease;
+  }
+  @keyframes donateIn {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+  .donate-modal h3 { font-size: 1.2rem; margin-bottom: 8px; }
+  .donate-modal p { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 16px; }
+  .donate-modal-img img { max-width: 200px; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); }
+  .donate-modal-actions { display: flex; gap: 10px; justify-content: center; margin-top: 16px; }
+  .donate-modal-actions .btn { font-size: 0.85rem; padding: 8px 18px; }
+  </style>
+  
 </body>
 </html>
 
