@@ -1,10 +1,14 @@
 # Cloudflare Pages redirects
 # 文章路径重写
-/post/123-mq4oexcj /posts/123-mq4oexcj.html 301
-/post/测试文章-mq4notyk /posts/测试文章-mq4notyk.html 301
+/post/123-mq4rmhby /posts/123-mq4rmhby.html 301
+/post/123-mq4rnfpg /posts/123-mq4rnfpg.html 301
+/post/放大-mq4rqx6d /posts/放大-mq4rqx6d.html 301
 # 分类页
 /categories /categories/ 301
 /about /about/ 301
 /search /search/ 301
+# 排序模式
+/time /sort/time/ 301
+/alpha /sort/alpha/ 301
 # SPA fallback: 404.html
 /* /404.html 404

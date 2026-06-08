@@ -228,6 +228,88 @@ body.dark .icon-light { display: none; }
   font-size: 0.9rem;
 }
 
+/* --- 排序切换标签 --- */
+.sort-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 14px;
+}
+.sort-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 16px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 99px;
+  text-decoration: none;
+  transition: all 0.15s;
+}
+.sort-tab:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-light);
+}
+.sort-tab.active {
+  color: #fff;
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+/* --- 首字母索引 --- */
+.letter-index {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 16px;
+  padding-top: 14px;
+  padding-bottom: 6px;
+  border-top: 2px solid var(--accent);
+  border-bottom: 1px solid var(--border-color);
+  background: var(--accent-light);
+  border-radius: var(--radius-sm);
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.letter-label {
+  display: inline-flex;
+  align-items: center;
+  padding-right: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+.letter-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 34px;
+  padding: 0 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 99px;
+  text-decoration: none;
+  transition: all 0.15s;
+}
+.letter-link:hover {
+  color: var(--accent);
+  background: var(--accent-light);
+  border-color: var(--accent);
+}
+.letter-link.active {
+  color: #fff;
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
 /* --- Post Cards --- */
 .posts-list {
   display: flex;
@@ -799,6 +881,27 @@ img[loading="lazy"][src] {
 
   .nav a.admin-link {
     margin-left: 0;
+  }
+
+  .letter-index {
+    gap: 4px;
+    padding: 8px 8px 6px;
+  }
+  .letter-link {
+    min-width: 30px;
+    height: 28px;
+    padding: 0 8px;
+    font-size: 0.8rem;
+  }
+
+  .letter-index {
+    gap: 3px;
+  }
+  .letter-link {
+    min-width: 28px;
+    height: 26px;
+    font-size: 0.78rem;
+    padding: 0 5px;
   }
 
   .post-header .post-title {
