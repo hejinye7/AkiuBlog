@@ -1,7 +1,7 @@
 /**
  * 俄罗斯方块 - Tetris Game
  * 纯 JavaScript 实现，无外部依赖
- * Made by Claude
+ * Made by Akiu + ClaudeCode
  */
 (function() {
   'use strict';
