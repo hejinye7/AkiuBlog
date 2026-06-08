@@ -53,6 +53,10 @@
   .header .nav a:hover,
   .header .nav a.active { color: #fff !important; background: rgba(255,255,255,0.15) !important; }
   .menu-toggle span { background: rgba(255,255,255,0.85) !important; }
+  /* 移动端菜单背景（硬编码主题色，兼容所有浏览器） */
+  @media (max-width: 768px) {
+    .header .nav { background: #4f46e5 !important; }
+  }
   </style></head>
 <body class="">
   <!-- 导航栏 -->
