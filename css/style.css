@@ -872,8 +872,8 @@ img[loading="lazy"][src] {
     top: var(--header-height);
     left: 0;
     right: 0;
-    background: var(--bg-primary);
-    border-bottom: 1px solid var(--border-color);
+    background: linear-gradient(180deg, var(--gradient-start), var(--gradient-end));
+    border-bottom: 1px solid rgba(255,255,255,0.15);
     flex-direction: column;
     padding: 12px;
     gap: 4px;
@@ -887,10 +887,20 @@ img[loading="lazy"][src] {
   .nav a {
     padding: 10px 16px;
     font-size: 1rem;
+    color: rgba(255,255,255,0.85) !important;
+    border-radius: 6px;
+  }
+
+  .nav a:hover,
+  .nav a.active {
+    color: #fff !important;
+    background: rgba(255,255,255,0.15) !important;
   }
 
   .nav a.admin-link {
     margin-left: 0;
+    border-color: rgba(255,255,255,0.25);
+    color: rgba(255,255,255,0.85) !important;
   }
 
   .letter-index {
