@@ -3,27 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>支持开发 - Akiublog</title>
-  <meta name="description" content="Akiu 的个人博客">
-  <meta name="keywords" content="博客,Akiu,技术">
-  <meta name="author" content="Akiu">
+  <title>支持开发 - 我的博客</title>
+  <meta name="description" content="一个用 Markdown 写作的个人博客">
+  <meta name="keywords" content="博客,技术,生活">
+  <meta name="author" content="博主">
   <link rel="icon" href="../blogicon.ico" type="image/x-icon">
 
   <!-- Open Graph -->
-  <meta property="og:title" content="支持开发 - Akiublog">
-  <meta property="og:description" content="Akiu 的个人博客">
+  <meta property="og:title" content="支持开发 - 我的博客">
+  <meta property="og:description" content="一个用 Markdown 写作的个人博客">
   <meta property="og:type" content="website">
 
   <!-- highlight.js CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" id="hljs-theme">
   <link rel="stylesheet" href="../css/style.css">
-  <link rel="alternate" type="application/rss+xml" title="Akiublog" href="../rss.xml">
+  <link rel="alternate" type="application/rss+xml" title="我的博客" href="../rss.xml">
 </head>
 <body class="">
   <!-- 导航栏 -->
   <header class="header" id="header">
     <div class="container header-inner">
-      <a href="../" class="logo">Akiublog</a>
+      <a href="../" class="logo">我的博客</a>
       <button class="menu-toggle" id="menuToggle" aria-label="菜单">
         <span></span><span></span><span></span>
       </button>
@@ -58,21 +58,12 @@
 <div class="donate-page">
   <div class="donate-card">
     
-      <div class="donate-qr">
-        <img src="../uploads/donate.png" alt="资助二维码" loading="lazy">
-      </div>
-    
 
     
       <div class="post-content">
-        <h2 id="支持开发">支持开发</h2>
-<p>如果你喜欢这个博客，可以通过以下方式支持我：</p>
-<ul>
-<li>请我喝杯咖啡 ☕</li>
-<li>在 GitHub 上点个 ⭐</li>
-<li>提出宝贵的建议</li>
-</ul>
-<p>感谢你的支持！❤️</p>
+        <h2 id="-支持开发">☕ 支持开发</h2>
+<p>如果你喜欢这个博客，欢迎扫码支持，谢谢！</p>
+<p>你的支持是我持续创作的最大动力 🚀</p>
 
       </div>
     
@@ -105,11 +96,9 @@
   <footer class="footer">
     <div class="container footer-inner">
       <div class="footer-info">
-        © 2026 Akiublog. Made by Akiu + ClaudeCode
+        © {year} 我的博客. All rights reserved.
       </div>
       <div class="footer-links">
-        
-          <a href="https://github.com/hejinye7" target="_blank" rel="noopener" title="GitHub">GitHub</a>
         
         
         <a href="../rss.xml" target="_blank" title="RSS 订阅">RSS</a>
@@ -125,67 +114,6 @@
   <script src="../js/main.js"></script>
 
   <!-- 资助弹窗 -->
-  
-  <div class="donate-overlay" id="donateOverlay">
-    <div class="donate-modal">
-      <h3>支持开发</h3>
-      <p>如果你喜欢这个博客，欢迎请我喝杯咖啡 ☕</p>
-      <div class="donate-modal-img">
-        <img src="../uploads/donate.png" alt="资助" loading="lazy">
-      </div>
-      <div class="donate-modal-actions">
-        <button class="btn btn-secondary" onclick="closeDonate(7)">7天内不显示</button>
-        <button class="btn" onclick="closeDonate(0)">关闭</button>
-      </div>
-    </div>
-  </div>
-  <script>
-  (function() {
-    var key = 'donate_hide_until';
-    var until = localStorage.getItem(key);
-    var now = Date.now();
-    if (!until || parseInt(until) < now) {
-      var overlay = document.getElementById('donateOverlay');
-      if (overlay) overlay.style.display = 'flex';
-    }
-    window.closeDonate = function(days) {
-      var overlay = document.getElementById('donateOverlay');
-      if (overlay) overlay.style.display = 'none';
-      if (days > 0) {
-        localStorage.setItem(key, String(now + days * 24 * 60 * 60 * 1000));
-      }
-    };
-  })();
-  </script>
-  <style>
-  .donate-overlay {
-    display: none;
-    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.5);
-    z-index: 9999;
-    justify-content: center; align-items: center;
-    padding: 20px;
-  }
-  .donate-modal {
-    background: var(--bg-primary);
-    border-radius: var(--radius-lg);
-    padding: 32px 28px 24px;
-    max-width: 360px;
-    width: 100%;
-    text-align: center;
-    box-shadow: var(--shadow-lg);
-    animation: donateIn 0.3s ease;
-  }
-  @keyframes donateIn {
-    from { transform: scale(0.9); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-  }
-  .donate-modal h3 { font-size: 1.2rem; margin-bottom: 8px; }
-  .donate-modal p { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 16px; }
-  .donate-modal-img img { max-width: 200px; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); }
-  .donate-modal-actions { display: flex; gap: 10px; justify-content: center; margin-top: 16px; }
-  .donate-modal-actions .btn { font-size: 0.85rem; padding: 8px 18px; }
-  </style>
   
 </body>
 </html>

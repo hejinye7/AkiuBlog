@@ -347,6 +347,16 @@ body.dark .icon-light { display: none; }
   color: var(--text-muted);
 }
 
+.badge-pinned {
+  font-size: 0.75rem;
+  background: #ffd700;
+  color: #333;
+  padding: 1px 8px;
+  border-radius: 99px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
 .post-category a {
   color: var(--accent);
   background: var(--accent-light);

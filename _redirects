@@ -1,8 +1,6 @@
 # Cloudflare Pages redirects
 # 文章路径重写
-/post/123-mq4rmhby /posts/123-mq4rmhby.html 301
-/post/123-mq4rnfpg /posts/123-mq4rnfpg.html 301
-/post/放大-mq4rqx6d /posts/放大-mq4rqx6d.html 301
+/post/hello-world /posts/hello-world.html 301
 # 分类页
 /categories /categories/ 301
 /about /about/ 301
