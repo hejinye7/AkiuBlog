@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>搜索 - Akiu的博客</title>
+  <title> - Akiu的博客</title>
   <meta name="description" content="一个用 Markdown 写作的个人博客">
   <meta name="keywords" content="博客,技术,生活">
   <meta name="author" content="博主">
@@ -16,14 +16,14 @@
   <link rel="manifest" href="/manifest.json">
 
   <!-- Open Graph -->
-  <meta property="og:title" content="搜索 - Akiu的博客">
+  <meta property="og:title" content=" - Akiu的博客">
   <meta property="og:description" content="一个用 Markdown 写作的个人博客">
   <meta property="og:type" content="website">
 
   <!-- highlight.js CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" id="hljs-theme">
-  <link rel="stylesheet" href="../css/style.css">
-  <link rel="alternate" type="application/rss+xml" title="Akiu的博客" href="../rss.xml">
+  <link rel="stylesheet" href="../../css/style.css">
+  <link rel="alternate" type="application/rss+xml" title="Akiu的博客" href="../../rss.xml">
 
   <!-- 主题颜色 -->
   <style>
@@ -62,20 +62,20 @@
   <!-- 导航栏 -->
   <header class="header" id="header">
     <div class="container header-inner">
-      <a href="../" class="logo">Akiu的博客</a>
+      <a href="../../" class="logo">Akiu的博客</a>
       <button class="menu-toggle" id="menuToggle" aria-label="菜单">
         <span></span><span></span><span></span>
       </button>
       <nav class="nav" id="nav">
-        <a href="../" class="active">首页</a>
-        <a href="../categories/" class="">分类</a>
-        <a href="../search/" class="">搜索</a>
+        <a href="../../" class="active">首页</a>
+        <a href="../../categories/" class="">分类</a>
+        <a href="../../search/" class="">搜索</a>
         
-        <a href="../donate/" class="">☕ 支持</a>
+        <a href="../../donate/" class="">☕ 支持</a>
         
-        <a href="../about/" class="">关于</a>
+        <a href="../../about/" class="">关于</a>
         
-          <a href="../game.html" class="">🎮 游戏</a>
+          <a href="../../game.html" class="">🎮 游戏</a>
         
         
       </nav>
@@ -90,88 +90,70 @@
     <div class="container">
 
 
-<div class="page-header">
-  <h1>搜索文章</h1>
-</div>
 
-<div class="search-form">
-  <input
-    type="text"
-    id="searchInput"
-    class="search-input"
-    placeholder="输入关键词搜索..."
-    value=""
-    autofocus
-  >
-  <button class="search-btn" onclick="doSearch()">🔍 搜索</button>
-</div>
 
-<div class="search-results" id="searchResults">
+
+  <div class="page-header">
+    <h1>文章</h1>
+    <p class="subtitle">一个用 Markdown 写作的个人博客</p>
+
+    
+    <!-- 排序模式切换 -->
+    
+    <div class="sort-tabs">
+      
+        <a href="../../sort/time/" class="sort-tab ">⏰ 最新</a>
+      
+        <a href="../../" class="sort-tab ">⭐ 推荐</a>
+      
+        <a href="../../sort/alpha/" class="sort-tab active">🔤 名称</a>
+      
+    </div>
+    
+
+    <!-- 首字母索引（仅"名称"模式显示） -->
+    <div class="letter-index" style="">
+      <span class="letter-label">🔤</span>
+      
+      <a href="../../sort/alpha/" class="letter-link ">全部</a>
+      
+        <a href="../../letter/H/" class="letter-link ">H</a>
+      
+        <a href="../../letter/N/" class="letter-link active">N</a>
+      
+    </div>
+  </div>
+
+
+<div class="posts-list">
+  
+
+  
+    <article class="post-card">
+      <div class="post-card-body">
+        <div class="post-meta">
+          <span class="post-date">2026年6月8日</span>
+          <span class="post-category"><a href="../../categories/未分类/">未分类</a></span>
+          
+        </div>
+        <h2 class="post-title">
+          <a href="../../posts/你们好我这是一篇测试文章看看github-mq59lb37.html">你们好，我这是一篇测试文章看看github支不支持各种格式</a>
+        </h2>
+        <p class="post-description">| 1 | 1 | 1 |
+| --- | --- | --- |
+| 1 | 1 | 1 |
+| 1 | 1 | 1 |
+
+![](/uploads/mq59ko90-ug07.png)</p>
+        <div class="post-tags">
+          
+        </div>
+      </div>
+    </article>
   
 </div>
 
-<script>
-// 嵌入式文章数据（静态导出时用）
-var POSTS_DATA = [{"slug":"hello-world","title":"Hello Qiu - 世界第一的博客格式","description":".qiu 格式的示例文章","date":"2026-06-08T00:00:00.000Z","category":"公告","tags":["qiu","博客"],"content":"# 🏆 .qiu — 世界第一的博客文章格式\n\n这是使用 **.qiu** 格式创建的第一篇文章！\n\n## 格式特点\n\n- **#qiu v1** — 文件头标识格式版本\n- **JSON 元数据** — 干净、标准、易解析\n- **---** 分隔元数据与正文\n- **Markdown 正文** — 完全兼容标准 Markdown\n\n## 兼容性\n\n.qiu 文件与原有的 `.md` 文件完全兼容并存，系统会自动识别格式。\n"},{"slug":"你们好我这是一篇测试文章看看github-mq59lb37","title":"你们好，我这是一篇测试文章看看github支不支持各种格式","description":"| 1 | 1 | 1 |\n| --- | --- | --- |\n| 1 | 1 | 1 |\n| 1 | 1 | 1 |\n\n![](/uploads/mq59ko90-ug07.png)","date":"2026-06-08T00:00:00.000Z","category":"未分类","tags":[],"content":"\n| 1 | 1 | 1 |\n| --- | --- | --- |\n| 1 | 1 | 1 |\n| 1 | 1 | 1 |\n\n![](/uploads/mq59ko90-ug07.png)\n"}];
-// 链接前缀（静态导出 vs 动态模式）
-var IS_STATIC = true;
-var POST_URL = IS_STATIC ? '../posts/' : '/post/';
-var POST_EXT = IS_STATIC ? '.html' : '';
 
-function doSearch() {
-  var q = document.getElementById('searchInput').value.trim();
-  if (q) {
-    window.location.href = '?q=' + encodeURIComponent(q);
-  }
-}
-
-// 客户端搜索（页面加载时从URL读取查询参数）
-(function() {
-  var params = new URLSearchParams(window.location.search);
-  var q = params.get('q');
-  if (!q) return;
-
-  var input = document.getElementById('searchInput');
-  input.value = q;
-
-  // 如果有服务端渲染的结果（动态模式），就不重复处理了
-  var hasServerResults = false;
-
-  // 没有服务端结果时，用客户端搜索（静态导出模式）
-  if (!hasServerResults && POSTS_DATA.length > 0) {
-    var kw = q.toLowerCase();
-    var results = POSTS_DATA.filter(function(p) {
-      return (p.title && p.title.toLowerCase().indexOf(kw) !== -1) ||
-             (p.content && p.content.toLowerCase().indexOf(kw) !== -1) ||
-             (p.tags && p.tags.some(function(t) { return t.toLowerCase().indexOf(kw) !== -1; }));
-    });
-
-    var container = document.getElementById('searchResults');
-    if (results.length > 0) {
-      container.innerHTML = '<p class="search-count">找到 ' + results.length + ' 篇相关文章</p>' +
-        results.map(function(p) {
-          var d = new Date(p.date);
-          var ds = d.getFullYear() + '年' + (d.getMonth()+1) + '月' + d.getDate() + '日';
-          return '<article class="post-card">' +
-            '<div class="post-card-body">' +
-            '<div class="post-meta">' +
-            '<span>' + ds + '</span>' +
-            '<span>' + (p.category || '') + '</span></div>' +
-            '<h2 class="post-title">' +
-            '<a href="' + POST_URL + p.slug + POST_EXT + '">' + p.title + '</a></h2>' +
-            '<p class="post-description">' + (p.description || '') + '</p>' +
-            '</div></article>';
-        }).join('');
-    } else {
-      container.innerHTML = '<div class="empty-state"><p>没有找到包含 "' + q + '" 的文章</p></div>';
-    }
-  }
-})();
-
-document.getElementById('searchInput').addEventListener('keyup', function(e) {
-  if (e.key === 'Enter') doSearch();
-});
-</script>
 
     </div>
   </main>
@@ -185,7 +167,7 @@ document.getElementById('searchInput').addEventListener('keyup', function(e) {
       <div class="footer-links">
         
         
-        <a href="../rss.xml" target="_blank" title="RSS 订阅">RSS</a>
+        <a href="../../rss.xml" target="_blank" title="RSS 订阅">RSS</a>
       </div>
     </div>
   </footer>
@@ -195,7 +177,7 @@ document.getElementById('searchInput').addEventListener('keyup', function(e) {
   <script>hljs.highlightAll();</script>
 
   <!-- 主脚本 -->
-  <script src="../js/main.js"></script>
+  <script src="../../js/main.js"></script>
 
   <!-- 实时时钟 -->
   <script>

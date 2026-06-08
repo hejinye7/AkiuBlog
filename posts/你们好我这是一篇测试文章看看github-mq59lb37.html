@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>搜索 - Akiu的博客</title>
+  <title>你们好，我这是一篇测试文章看看github支不支持各种格式 - Akiu的博客</title>
   <meta name="description" content="一个用 Markdown 写作的个人博客">
   <meta name="keywords" content="博客,技术,生活">
   <meta name="author" content="博主">
@@ -16,7 +16,7 @@
   <link rel="manifest" href="/manifest.json">
 
   <!-- Open Graph -->
-  <meta property="og:title" content="搜索 - Akiu的博客">
+  <meta property="og:title" content="你们好，我这是一篇测试文章看看github支不支持各种格式 - Akiu的博客">
   <meta property="og:description" content="一个用 Markdown 写作的个人博客">
   <meta property="og:type" content="website">
 
@@ -90,88 +90,58 @@
     <div class="container">
 
 
-<div class="page-header">
-  <h1>搜索文章</h1>
-</div>
+<article class="post-full">
+  <header class="post-header">
+    <div class="post-meta">
+      <span class="post-date">2026年6月8日</span>
+      <span class="post-category"><a href="../categories/未分类/">未分类</a></span>
+      <span class="post-wordcount">约 65 字</span>
+    </div>
+    <h1 class="post-title">你们好，我这是一篇测试文章看看github支不支持各种格式</h1>
+    <div class="post-tags">
+      
+    </div>
+  </header>
 
-<div class="search-form">
-  <input
-    type="text"
-    id="searchInput"
-    class="search-input"
-    placeholder="输入关键词搜索..."
-    value=""
-    autofocus
-  >
-  <button class="search-btn" onclick="doSearch()">🔍 搜索</button>
-</div>
-
-<div class="search-results" id="searchResults">
   
-</div>
 
-<script>
-// 嵌入式文章数据（静态导出时用）
-var POSTS_DATA = [{"slug":"hello-world","title":"Hello Qiu - 世界第一的博客格式","description":".qiu 格式的示例文章","date":"2026-06-08T00:00:00.000Z","category":"公告","tags":["qiu","博客"],"content":"# 🏆 .qiu — 世界第一的博客文章格式\n\n这是使用 **.qiu** 格式创建的第一篇文章！\n\n## 格式特点\n\n- **#qiu v1** — 文件头标识格式版本\n- **JSON 元数据** — 干净、标准、易解析\n- **---** 分隔元数据与正文\n- **Markdown 正文** — 完全兼容标准 Markdown\n\n## 兼容性\n\n.qiu 文件与原有的 `.md` 文件完全兼容并存，系统会自动识别格式。\n"},{"slug":"你们好我这是一篇测试文章看看github-mq59lb37","title":"你们好，我这是一篇测试文章看看github支不支持各种格式","description":"| 1 | 1 | 1 |\n| --- | --- | --- |\n| 1 | 1 | 1 |\n| 1 | 1 | 1 |\n\n![](/uploads/mq59ko90-ug07.png)","date":"2026-06-08T00:00:00.000Z","category":"未分类","tags":[],"content":"\n| 1 | 1 | 1 |\n| --- | --- | --- |\n| 1 | 1 | 1 |\n| 1 | 1 | 1 |\n\n![](/uploads/mq59ko90-ug07.png)\n"}];
-// 链接前缀（静态导出 vs 动态模式）
-var IS_STATIC = true;
-var POST_URL = IS_STATIC ? '../posts/' : '/post/';
-var POST_EXT = IS_STATIC ? '.html' : '';
+  <div class="post-content">
+    <table>
+<thead>
+<tr>
+<th>1</th>
+<th>1</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<p><img src="../uploads/mq59ko90-ug07.png" alt=""></p>
 
-function doSearch() {
-  var q = document.getElementById('searchInput').value.trim();
-  if (q) {
-    window.location.href = '?q=' + encodeURIComponent(q);
-  }
-}
+  </div>
 
-// 客户端搜索（页面加载时从URL读取查询参数）
-(function() {
-  var params = new URLSearchParams(window.location.search);
-  var q = params.get('q');
-  if (!q) return;
-
-  var input = document.getElementById('searchInput');
-  input.value = q;
-
-  // 如果有服务端渲染的结果（动态模式），就不重复处理了
-  var hasServerResults = false;
-
-  // 没有服务端结果时，用客户端搜索（静态导出模式）
-  if (!hasServerResults && POSTS_DATA.length > 0) {
-    var kw = q.toLowerCase();
-    var results = POSTS_DATA.filter(function(p) {
-      return (p.title && p.title.toLowerCase().indexOf(kw) !== -1) ||
-             (p.content && p.content.toLowerCase().indexOf(kw) !== -1) ||
-             (p.tags && p.tags.some(function(t) { return t.toLowerCase().indexOf(kw) !== -1; }));
-    });
-
-    var container = document.getElementById('searchResults');
-    if (results.length > 0) {
-      container.innerHTML = '<p class="search-count">找到 ' + results.length + ' 篇相关文章</p>' +
-        results.map(function(p) {
-          var d = new Date(p.date);
-          var ds = d.getFullYear() + '年' + (d.getMonth()+1) + '月' + d.getDate() + '日';
-          return '<article class="post-card">' +
-            '<div class="post-card-body">' +
-            '<div class="post-meta">' +
-            '<span>' + ds + '</span>' +
-            '<span>' + (p.category || '') + '</span></div>' +
-            '<h2 class="post-title">' +
-            '<a href="' + POST_URL + p.slug + POST_EXT + '">' + p.title + '</a></h2>' +
-            '<p class="post-description">' + (p.description || '') + '</p>' +
-            '</div></article>';
-        }).join('');
-    } else {
-      container.innerHTML = '<div class="empty-state"><p>没有找到包含 "' + q + '" 的文章</p></div>';
-    }
-  }
-})();
-
-document.getElementById('searchInput').addEventListener('keyup', function(e) {
-  if (e.key === 'Enter') doSearch();
-});
-</script>
+  <!-- 上下篇文章导航 -->
+  <nav class="post-nav">
+    <div class="post-nav-prev">
+      
+    </div>
+    <div class="post-nav-next">
+      
+        <span class="post-nav-label">下一篇 →</span>
+        <a href="../posts/hello-world.html">Hello Qiu - 世界第一的博客格式</a>
+      
+    </div>
+  </nav>
+</article>
 
     </div>
   </main>
