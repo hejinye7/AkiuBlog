@@ -102,9 +102,9 @@
 
 <script>
 function doSearch() {
-  const q = document.getElementById('searchInput').value.trim();
+  var q = document.getElementById('searchInput').value.trim();
   if (q) {
-    window.location.href = '/search?q=' + encodeURIComponent(q);
+    window.location.href = '?q=' + encodeURIComponent(q);
   }
 }
 document.getElementById('searchInput').addEventListener('keyup', function(e) {
