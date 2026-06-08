@@ -1,0 +1,10 @@
+# Cloudflare Pages redirects
+# 文章路径重写
+/post/hello-world /posts/hello-world.html 301
+# 分类页
+/categories /categories/ 301
+/about /about/ 301
+/search /search/ 301
+
+# SPA fallback: 404.html
+/* /404.html 404
