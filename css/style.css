@@ -964,3 +964,95 @@ img[loading="lazy"][src] {
     text-align: center;
   }
 }
+
+/* ============================================
+   Android / 移动端优化
+   ============================================ */
+
+/* 防止横竖屏切换时字体缩放 */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+  scroll-behavior: smooth;
+}
+
+/* 100vh 修复（移动端浏览器地址栏问题） */
+.admin-layout,
+.full-height {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* 触摸目标优化 */
+.nav a,
+.btn,
+.tag,
+.letter-link,
+.sort-tab,
+.category-card,
+.pagination a,
+.footer-links a {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 按钮触摸反馈 */
+.btn:active,
+.tag:active,
+.letter-link:active,
+.sort-tab:active {
+  transform: scale(0.96);
+}
+
+/* 移动端滚动条优化 */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+
+/* 选中文本颜色 */
+::selection {
+  background: var(--accent);
+  color: #fff;
+}
+
+@media (max-width: 480px) {
+  .btn {
+    padding: 12px 24px;
+    font-size: 0.95rem;
+  }
+  .post-meta {
+    font-size: 0.8rem;
+  }
+  .tag {
+    padding: 4px 10px;
+    font-size: 0.78rem;
+  }
+  .sort-tab {
+    padding: 6px 12px;
+    font-size: 0.82rem;
+  }
+  /* 首页描述文字 */
+  .subtitle {
+    font-size: 0.85rem;
+  }
+  .pagination {
+    gap: 8px;
+  }
+  .page-link {
+    padding: 8px 16px;
+    font-size: 0.85rem;
+  }
+  /* 文章内容文字 */
+  .post-content {
+    font-size: 0.95rem;
+    line-height: 1.75;
+  }
+}
