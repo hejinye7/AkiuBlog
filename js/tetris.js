@@ -136,6 +136,13 @@
     }
 
     renderNext();
+
+    // 触发 AI
+    if (aiEnabled && !gameOver && currentPiece) {
+      aiPhase = 'idle';
+      if (aiTimer) clearTimeout(aiTimer);
+      aiTimer = setTimeout(aiStep, 80);
+    }
   }
 
   function collides(blocks, offsetX, offsetY) {
@@ -368,7 +375,7 @@
   // 游戏循环
   // ==========================================
   function update(timestamp) {
-    if (!gameOver && !paused && currentPiece) {
+    if (!gameOver && !paused && currentPiece && !aiEnabled) {
       if (timestamp - lastDropTime > dropInterval) {
         movePiece(0, 1);
         lastDropTime = timestamp;
@@ -452,6 +459,249 @@
     addTouch(btnRestart, resetGame);
     addTouch(btnPause, () => { paused = !paused; });
   }
+
+  // ==========================================
+  // AI 自动模式
+  // ==========================================
+  let aiEnabled = false;
+  let aiTimer = null;
+  let aiTargetRotation = 0;
+  let aiTargetX = 0;
+  let aiPhase = 'idle'; // 'rotate', 'move', 'drop'
+
+  function toggleAI() {
+    aiEnabled = !aiEnabled;
+    if (aiEnabled) {
+      aiTargetX = 0;
+      aiTargetRotation = 0;
+      aiPhase = 'idle';
+    } else {
+      if (aiTimer) { clearTimeout(aiTimer); aiTimer = null; }
+    }
+    // 更新按钮文字
+    var btn = document.getElementById('tetris-btn-ai');
+    if (btn) btn.textContent = aiEnabled ? '🤖 AI 开' : '🤖 AI';
+  }
+
+  // 模拟将方块落到某位置，返回最终的 board
+  function simulateDrop(boardClone, blocks, x, y) {
+    var b = boardClone.map(function(row) { return row.slice(); });
+    var py = y;
+    while (!collidesWithBoard(b, blocks, x, py + 1)) { py++; }
+    for (var r = 0; r < blocks.length; r++) {
+      for (var c = 0; c < blocks[r].length; c++) {
+        if (blocks[r][c]) {
+          var by = py + r;
+          var bx = x + c;
+          if (by >= 0 && by < ROWS && bx >= 0 && bx < COLS) {
+            b[by][bx] = 1;
+          }
+        }
+      }
+    }
+    return b;
+  }
+
+  function collidesWithBoard(boardClone, blocks, offsetX, offsetY) {
+    for (var r = 0; r < blocks.length; r++) {
+      for (var c = 0; c < blocks[r].length; c++) {
+        if (!blocks[r][c]) continue;
+        var bx = offsetX + c;
+        var by = offsetY + r;
+        if (bx < 0 || bx >= COLS || by >= ROWS) return true;
+        if (by >= 0 && boardClone[by][bx]) return true;
+      }
+    }
+    return false;
+  }
+
+  // 评分函数：越低越好
+  function evaluateBoard(boardClone) {
+    var score = 0;
+    // 1. 最高点（越低越好）
+    var maxHeight = 0;
+    var heights = [];
+    for (var c = 0; c < COLS; c++) {
+      var h = 0;
+      for (var r = 0; r < ROWS; r++) {
+        if (boardClone[r][c]) { h = ROWS - r; break; }
+      }
+      heights.push(h);
+      if (h > maxHeight) maxHeight = h;
+    }
+    score += maxHeight * 1.5;
+
+    // 2. 凹凸度（相邻列高度差）
+    for (var c = 0; c < COLS - 1; c++) {
+      score += Math.abs(heights[c] - heights[c + 1]) * 2;
+    }
+
+    // 3. 空洞（方块下面有空格）
+    var holes = 0;
+    for (var c = 0; c < COLS; c++) {
+      var blocked = false;
+      for (var r = 0; r < ROWS; r++) {
+        if (boardClone[r][c]) blocked = true;
+        else if (blocked) holes++;
+      }
+    }
+    score += holes * 5;
+
+    // 4. 完整行数奖励
+    var completedRows = 0;
+    for (var r = 0; r < ROWS; r++) {
+      if (boardClone[r].every(function(cell) { return cell !== 0; })) {
+        completedRows++;
+      }
+    }
+    score -= completedRows * 10;
+
+    return score;
+  }
+
+  // 寻找最佳位置
+  function aiFindBest() {
+    if (!currentPiece) return null;
+    var bestScore = Infinity;
+    var bestMove = null;
+
+    // 尝试所有旋转
+    var testBlocks = currentPiece.blocks.map(function(r) { return r.slice(); });
+    for (var rot = 0; rot < 4; rot++) {
+      if (rot > 0) {
+        // 旋转
+        testBlocks = testBlocks[0].map(function(_, idx) {
+          return testBlocks.map(function(row) { return row[idx]; }).reverse();
+        });
+      }
+
+      // 尝试所有水平位置
+      for (var col = -(testBlocks[0].length - 1); col < COLS; col++) {
+        if (collidesWithBoard(board, testBlocks, col, 0)) continue;
+
+        var simBoard = simulateDrop(board, testBlocks, col, 0);
+        var s = evaluateBoard(simBoard);
+
+        if (s < bestScore) {
+          bestScore = s;
+          bestMove = { rotation: rot, x: col };
+        }
+      }
+    }
+
+    return bestMove;
+  }
+
+  // AI 执行一步
+  function aiStep() {
+    if (!aiEnabled || !currentPiece || gameOver || paused) {
+      aiPhase = 'idle';
+      return;
+    }
+
+    if (aiPhase === 'idle') {
+      // 计算最佳走法
+      var move = aiFindBest();
+      if (!move) { aiPhase = 'drop'; return; }
+      aiTargetRotation = move.rotation;
+      aiTargetX = move.x;
+      aiPhase = 'rotate';
+    }
+
+    if (aiPhase === 'rotate') {
+      // 先获取当前旋转次数
+      var currentBlocks = currentPiece.blocks;
+      // 尝试所有旋转，看当前是哪一种
+      var baseBlocks = currentPiece.blocks;
+      var targetBlocks = currentPiece.blocks.map(function(r) { return r.slice(); });
+
+      // 计算需要旋转的次数
+      var needRotate = aiTargetRotation;
+      // 旋转到目标状态
+      for (var i = 0; i < 4; i++) {
+        var bStr = JSON.stringify(currentPiece.blocks);
+        // 计算需要旋转到目标
+        if (i === aiTargetRotation % 4) {
+          needRotate = i;
+          break;
+        }
+      }
+
+      // 尝试旋转到目标
+      for (var r = 0; r < 4; r++) {
+        // 粗略方法：旋转直到匹配
+        var blocksStr = JSON.stringify(currentPiece.blocks);
+        // 直接旋转指定次数
+      }
+
+      // 简化方法：直接旋转到需要的次数
+      var rotCount = aiTargetRotation % 4;
+      while (rotCount > 0) {
+        rotatePiece();
+        rotCount--;
+      }
+
+      aiPhase = 'move';
+      aiTimer = setTimeout(aiStep, 30);
+      return;
+    }
+
+    if (aiPhase === 'move') {
+      if (currentPiece.x < aiTargetX) {
+        movePiece(1, 0);
+        aiTimer = setTimeout(aiStep, 20);
+        return;
+      } else if (currentPiece.x > aiTargetX) {
+        movePiece(-1, 0);
+        aiTimer = setTimeout(aiStep, 20);
+        return;
+      }
+      aiPhase = 'drop';
+    }
+
+    if (aiPhase === 'drop') {
+      hardDrop();
+      aiPhase = 'idle';
+      // 新方块生成后继续 AI
+      aiTimer = setTimeout(function() {
+        if (aiEnabled && !gameOver) aiPhase = 'idle';
+      }, 50);
+    }
+  }
+
+  // 添加 AI 按钮
+  function addAIButton() {
+    var container = document.querySelector('.tetris-controls-info .controls-list');
+    if (container) {
+      var btn = document.createElement('button');
+      btn.id = 'tetris-btn-ai';
+      btn.textContent = '🤖 AI';
+      btn.style.cssText = 'margin-top:8px;padding:6px 12px;background:var(--accent);color:#fff;border:none;border-radius:4px;cursor:pointer;font-size:0.85rem;width:100%';
+      btn.onclick = toggleAI;
+      container.appendChild(btn);
+    }
+
+    // 触控按钮也加一个
+    var touchRow = document.querySelector('.tetris-touch-controls .touch-row:last-child');
+    if (touchRow) {
+      var tbtn = document.createElement('button');
+      tbtn.id = 'tetris-btn-ai-touch';
+      tbtn.textContent = '🤖 AI';
+      tbtn.className = 'touch-btn';
+      tbtn.onclick = toggleAI;
+      touchRow.appendChild(tbtn);
+    }
+  }
+
+  // 在 init 中调用 addAIButton
+  var origInit = init;
+  init = function() {
+    addAIButton();
+    origInit();
+  };
+
+  // 暴露 resetGame 给全局（供 HTML 按钮调用）
+  window.resetGame = resetGame;
 
   // ==========================================
   // 页面加载时启动

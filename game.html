@@ -100,7 +100,7 @@
         <div class="overlay-content">
           <h2>游戏结束</h2>
           <p>得分: <span id="tetris-final-score">0</span></p>
-          <button class="tetris-btn" onclick="location.reload()">再来一局</button>
+          <button class="tetris-btn" onclick="if(window.resetGame)window.resetGame()">再来一局</button>
         </div>
       </div>
 
