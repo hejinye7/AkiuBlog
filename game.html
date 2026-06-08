@@ -1,1 +1,405 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><title>游戏</title><meta http-equiv="refresh" content="0;url=game/"></head><body><script>location.href="game/";</script></body></html>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>小游戏 - 我的博客</title>
+  <meta name="description" content="一个用 Markdown 写作的个人博客">
+  <meta name="keywords" content="博客,技术,生活">
+  <meta name="author" content="博主">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="小游戏 - 我的博客">
+  <meta property="og:description" content="一个用 Markdown 写作的个人博客">
+  <meta property="og:type" content="website">
+
+  <!-- highlight.js CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" id="hljs-theme">
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="alternate" type="application/rss+xml" title="我的博客" href="./rss.xml">
+</head>
+<body class="">
+  <!-- 导航栏 -->
+  <header class="header" id="header">
+    <div class="container header-inner">
+      <a href="./" class="logo">我的博客</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="菜单">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="nav" id="nav">
+        <a href="./" class="active">首页</a>
+        <a href="./categories/" class="">分类</a>
+        <a href="./search/" class="">搜索</a>
+        <a href="./about/" class="">关于</a>
+        
+          <a href="./game.html" class="">🎮 游戏</a>
+        
+        
+      </nav>
+      <button class="theme-toggle" id="themeToggle" aria-label="切换主题" title="切换暗色/亮色主题">
+        <span class="icon-light">☀️</span>
+        <span class="icon-dark">🌙</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="container">
+
+
+<div class="page-header">
+  <h1>🎮 俄罗斯方块</h1>
+  
+    <p class="subtitle">经典俄罗斯方块小游戏，键盘方向键操作</p>
+  
+</div>
+
+<div class="game-container">
+  <div class="tetris-wrapper">
+    <!-- 游戏信息栏 -->
+    <div class="tetris-sidebar">
+      <div class="tetris-info">
+        <div class="info-box">
+          <span class="info-label">分数</span>
+          <span class="info-value" id="tetris-score">0</span>
+        </div>
+        <div class="info-box">
+          <span class="info-label">行数</span>
+          <span class="info-value" id="tetris-lines">0</span>
+        </div>
+        <div class="info-box">
+          <span class="info-label">等级</span>
+          <span class="info-value" id="tetris-level">1</span>
+        </div>
+      </div>
+
+      <div class="tetris-next-box">
+        <div class="info-label">下一个</div>
+        <canvas id="tetris-next"></canvas>
+      </div>
+
+      <div class="tetris-controls-info">
+        <div class="info-label">操作</div>
+        <div class="controls-list">
+          <span>← → 移动</span>
+          <span>↑ 旋转</span>
+          <span>↓ 加速下落</span>
+          <span>空格 直接落底</span>
+          <span>P 暂停</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 游戏主区域 -->
+    <div class="tetris-board-wrapper">
+      <canvas id="tetris-board"></canvas>
+
+      <!-- Game Over 遮罩 -->
+      <div class="tetris-overlay" id="tetris-gameover" style="display:none">
+        <div class="overlay-content">
+          <h2>游戏结束</h2>
+          <p>得分: <span id="tetris-final-score">0</span></p>
+          <button class="tetris-btn" onclick="location.reload()">再来一局</button>
+        </div>
+      </div>
+
+      <!-- 暂停提示 -->
+      <div class="tetris-overlay pause-overlay" id="tetris-pause" style="display:none">
+        <div class="overlay-content">
+          <h2>已暂停</h2>
+          <p>按 P 继续</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 触控按钮（移动端） -->
+  <div class="tetris-touch-controls">
+    <div class="touch-row">
+      <button class="touch-btn" id="tetris-btn-rotate">🔄 旋转</button>
+    </div>
+    <div class="touch-row">
+      <button class="touch-btn" id="tetris-btn-left">◀ 左</button>
+      <button class="touch-btn" id="tetris-btn-down">▼ 下</button>
+      <button class="touch-btn" id="tetris-btn-right">右 ▶</button>
+    </div>
+    <div class="touch-row">
+      <button class="touch-btn" id="tetris-btn-drop">⬇ 落底</button>
+      <button class="touch-btn" id="tetris-btn-restart">🔄 重开</button>
+      <button class="touch-btn" id="tetris-btn-pause">⏸ 暂停</button>
+    </div>
+  </div>
+</div>
+
+<div class="game-footer">
+  <p>Made by Claude</p>
+</div>
+
+<!-- 游戏脚本 -->
+<script src="./js/tetris.js"></script>
+
+<style>
+/* --- 游戏容器 --- */
+.game-container {
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.tetris-wrapper {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* --- 信息栏 --- */
+.tetris-sidebar {
+  width: 120px;
+  flex-shrink: 0;
+}
+
+.tetris-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.info-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  text-align: center;
+}
+
+.info-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.info-value {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.tetris-next-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 8px;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+#tetris-next {
+  display: block;
+  margin: 8px auto 0;
+}
+
+.tetris-controls-info {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 10px;
+}
+
+.controls-list {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-top: 6px;
+}
+
+.controls-list span {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+/* --- 游戏主区域 --- */
+.tetris-board-wrapper {
+  position: relative;
+  flex-shrink: 0;
+}
+
+#tetris-board {
+  display: block;
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: #1a1a2e;
+  box-shadow: var(--shadow-md);
+}
+
+/* --- Game Over / Pause 遮罩 --- */
+.tetris-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 15, 26, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  z-index: 10;
+}
+
+.overlay-content {
+  text-align: center;
+  color: white;
+}
+
+.overlay-content h2 {
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+}
+
+.overlay-content p {
+  font-size: 1.1rem;
+  margin-bottom: 16px;
+  opacity: 0.8;
+}
+
+.tetris-btn {
+  padding: 10px 28px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.tetris-btn:hover {
+  background: var(--accent-hover);
+}
+
+/* --- 触控按钮 --- */
+.tetris-touch-controls {
+  display: none;
+  margin-top: 16px;
+}
+
+.touch-row {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.touch-btn {
+  padding: 10px 16px;
+  min-width: 64px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.touch-btn:active {
+  background: var(--accent-light);
+  transform: scale(0.95);
+}
+
+/* --- Made by Claude --- */
+.game-footer {
+  text-align: center;
+  margin-top: 24px;
+  padding: 16px 0;
+  border-top: 1px solid var(--border-color);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+/* --- 响应式 --- */
+@media (max-width: 600px) {
+  .tetris-wrapper {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+
+  .tetris-sidebar {
+    width: 100%;
+    max-width: 300px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .tetris-info {
+    flex-direction: row;
+    flex: 1;
+  }
+
+  .info-box {
+    flex: 1;
+  }
+
+  .tetris-next-box {
+    display: none;
+  }
+
+  .tetris-controls-info {
+    display: none;
+  }
+
+  .tetris-touch-controls {
+    display: block;
+  }
+
+  #tetris-board {
+    width: 250px;
+    height: 500px;
+  }
+}
+
+@media (min-width: 601px) {
+  .tetris-touch-controls {
+    display: none !important;
+  }
+}
+</style>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-info">
+        © 2026 我的博客. All rights reserved.
+      </div>
+      <div class="footer-links">
+        
+          <a href="https://github.com/yourname" target="_blank" rel="noopener" title="GitHub">GitHub</a>
+        
+        
+          <a href="https://twitter.com/yourname" target="_blank" rel="noopener" title="Twitter">Twitter</a>
+        
+        <a href="./rss.xml" target="_blank" title="RSS 订阅">RSS</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- highlight.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <!-- 主脚本 -->
+  <script src="./js/main.js"></script>
+</body>
+</html>
+
