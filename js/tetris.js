@@ -375,8 +375,9 @@
   // 游戏循环
   // ==========================================
   function update(timestamp) {
-    if (!gameOver && !paused && currentPiece && !aiEnabled) {
-      if (timestamp - lastDropTime > dropInterval) {
+    if (!gameOver && !paused && currentPiece) {
+      var interval = aiEnabled ? Math.min(dropInterval, 100) : dropInterval;
+      if (timestamp - lastDropTime > interval) {
         movePiece(0, 1);
         lastDropTime = timestamp;
       }
@@ -475,6 +476,11 @@
       aiTargetX = 0;
       aiTargetRotation = 0;
       aiPhase = 'idle';
+      // 立即触发 AI，不用等下一个方块
+      if (currentPiece && !gameOver) {
+        if (aiTimer) clearTimeout(aiTimer);
+        aiTimer = setTimeout(aiStep, 50);
+      }
     } else {
       if (aiTimer) { clearTimeout(aiTimer); aiTimer = null; }
     }
@@ -515,11 +521,11 @@
     return false;
   }
 
-  // 评分函数：越低越好
+  // 评分函数：越低越好（改进版：更智能，防死亡）
   function evaluateBoard(boardClone) {
     var score = 0;
-    // 1. 最高点（越低越好）
-    var maxHeight = 0;
+
+    // 各列高度
     var heights = [];
     for (var c = 0; c < COLS; c++) {
       var h = 0;
@@ -527,16 +533,26 @@
         if (boardClone[r][c]) { h = ROWS - r; break; }
       }
       heights.push(h);
-      if (h > maxHeight) maxHeight = h;
     }
-    score += maxHeight * 1.5;
 
-    // 2. 凹凸度（相邻列高度差）
+    // 1. 最大高度（越接近顶部越危险，非线性惩罚）
+    var maxHeight = Math.max.apply(null, heights);
+    score += maxHeight * 2;
+    // 接近顶部时额外重罚
+    if (maxHeight > ROWS - 6) score += Math.pow(maxHeight - ROWS + 6, 2) * 2;
+
+    // 2. 平均高度（越低越好）
+    var avgHeight = heights.reduce(function(a,b) { return a+b; }, 0) / COLS;
+    score += avgHeight;
+
+    // 3. 凹凸度（相邻列高度差之和）
+    var bumpiness = 0;
     for (var c = 0; c < COLS - 1; c++) {
-      score += Math.abs(heights[c] - heights[c + 1]) * 2;
+      bumpiness += Math.abs(heights[c] - heights[c + 1]);
     }
+    score += bumpiness * 3;
 
-    // 3. 空洞（方块下面有空格）
+    // 4. 空洞（方块上面有悬空空格）
     var holes = 0;
     for (var c = 0; c < COLS; c++) {
       var blocked = false;
@@ -545,16 +561,39 @@
         else if (blocked) holes++;
       }
     }
-    score += holes * 5;
+    score += holes * 10;
 
-    // 4. 完整行数奖励
+    // 5. 完整行奖励
     var completedRows = 0;
     for (var r = 0; r < ROWS; r++) {
       if (boardClone[r].every(function(cell) { return cell !== 0; })) {
         completedRows++;
       }
     }
-    score -= completedRows * 10;
+    score -= completedRows * 20;
+
+    // 6. 深井惩罚（某列比两边都低很多，难填平）
+    for (var c = 1; c < COLS - 1; c++) {
+      if (heights[c] < heights[c-1] - 2 && heights[c] < heights[c+1] - 2) {
+        score += (Math.min(heights[c-1], heights[c+1]) - heights[c]) * 4;
+      }
+    }
+
+    // 7. 柱子惩罚（某列比两边都高很多，制造凹凸）
+    for (var c = 1; c < COLS - 1; c++) {
+      if (heights[c] > heights[c-1] + 2 && heights[c] > heights[c+1] + 2) {
+        score += (heights[c] - Math.min(heights[c-1], heights[c+1])) * 6;
+      }
+    }
+
+    // 8. 边柱惩罚（最左边或最右边太高）
+    if (heights[0] > avgHeight + 3) score += (heights[0] - avgHeight) * 3;
+    if (heights[COLS-1] > avgHeight + 3) score += (heights[COLS-1] - avgHeight) * 3;
+
+    // 9. 死亡惩罚：任何列到达顶部直接废掉
+    for (var c = 0; c < COLS; c++) {
+      if (heights[c] >= ROWS - 1) score += 10000;
+    }
 
     return score;
   }
@@ -640,6 +679,8 @@
         rotatePiece();
         rotCount--;
       }
+      // 每次旋转后也下降一格（模拟按下键）
+      movePiece(0, 1);
 
       aiPhase = 'move';
       aiTimer = setTimeout(aiStep, 30);
@@ -649,10 +690,12 @@
     if (aiPhase === 'move') {
       if (currentPiece.x < aiTargetX) {
         movePiece(1, 0);
+        movePiece(0, 1); // 横移后也下降
         aiTimer = setTimeout(aiStep, 20);
         return;
       } else if (currentPiece.x > aiTargetX) {
         movePiece(-1, 0);
+        movePiece(0, 1); // 横移后也下降
         aiTimer = setTimeout(aiStep, 20);
         return;
       }
@@ -660,9 +703,8 @@
     }
 
     if (aiPhase === 'drop') {
-      hardDrop();
-      aiPhase = 'idle';
-      // 新方块生成后继续 AI
+      // 不硬降，靠重力和 movePiece(0,1) 自然落底
+      aiPhase = 'waiting';
       aiTimer = setTimeout(function() {
         if (aiEnabled && !gameOver) aiPhase = 'idle';
       }, 50);
